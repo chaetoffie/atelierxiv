@@ -5,10 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Atelier 14</title>
 
-  <!-- Linked image -->
-  <a href="https://en.wikipedia.org/wiki/Atelier" target="_blank">
-    <img src="unnamed.png" alt="My Picture" class="corner-image">
-  </a>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body style="margin:0; overflow:hidden; background:black;">
+
+  <!-- Starfield container -->
+  <div id="starfield"></div>
+
+  <!-- Cursor overlay -->
+  <canvas id="cursor-canvas" 
+    style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none;">
+  </canvas>
+
+  <!-- Gothic Title -->
+  <div class="title">Atelier XIV</div>
+
+  <!-- Image in corner (no Wikipedia link) -->
+  <img src="unnamed.png" alt="My Picture" class="corner-image" id="logo-img">
+
+  <!-- Popup nav -->
+  <div id="popup-nav" class="popup-nav" style="display:none;">
+    <button id="close-nav" class="close-nav">&times;</button>
+    <nav>
+      <a href="#">Accessories</a>
+      <a href="#">New Releases</a>
+      <a href="#">Statement Pieces</a>
+      <a href="#">Upcoming</a>
+    </nav>
+  </div>
 
   <!-- Login dialog -->
   <div class="login-wrapper">
@@ -21,45 +50,64 @@
     </div>
   </div>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+  <!-- Footer -->
+  <footer class="site-footer">
+    <!-- Top row -->
+    <div class="footer-links">
+      <a href="#">Terms</a>
+      <a href="#">Privacy</a>
+      <a href="#">General</a>
+      <a href="#">Contact</a>
+      <a href="#">Country</a>
+    </div>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="/style.css" />
-</head>
-<body>
-  <div class="title">Atelier XIV</div>
+    <!-- Bottom row -->
+    <div class="footer-bottom">
+      <span>© Atelier XIV LLC</span>
+      <a href="https://instagram.com/yourpage" target="_blank">
+        <img src="instagram.png" alt="Instagram" class="instagram-icon" />
+      </a>
+    </div>
+  </footer>
 
-  <!-- Login script -->
+  <!-- Login & Nav script -->
   <script>
-    const loginBtn = document.getElementById('loginBtn');
-    const loginDialog = document.getElementById('loginDialog');
+  const loginBtn = document.getElementById('loginBtn');
+  const loginDialog = document.getElementById('loginDialog');
+  loginBtn.addEventListener('click', () => {
+    loginDialog.classList.toggle('show');
+  });
 
-    loginBtn.addEventListener('click', () => {
-      loginDialog.classList.toggle('show');
-    });
+  // Pop-up nav logic
+  const logoImg = document.getElementById('logo-img');
+  const popupNav = document.getElementById('popup-nav');
+
+  logoImg.addEventListener('click', function(e) {
+    e.stopPropagation();
+    // Move logo to the right
+    logoImg.classList.add('moved');
+    // Get logo position and size
+    const rect = logoImg.getBoundingClientRect();
+    // Position nav just below the logo
+    popupNav.style.left = rect.left + "px";
+    popupNav.style.top = (rect.bottom + 10) + "px";
+    popupNav.style.display = 'block';
+  });
+
+  popupNav.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
+  // Hide nav and move logo back when clicking outside
+  window.addEventListener('click', function() {
+    if (popupNav.style.display === 'block') {
+      popupNav.style.display = 'none';
+      logoImg.classList.remove('moved');
+    }
+  });
   </script>
 
   <!-- Three.js entry point -->
   <script type="module" src="/main.js"></script>
 </body>
-<<footer class="site-footer">
-  <!-- Top row -->
-  <div class="footer-links">
-    <a href="#">Terms</a>
-    <a href="#">Privacy</a>
-    <a href="#">General</a>
-    <a href="#">Contact</a>
-    <a href="#">Country</a>
-  </div>
-
-  <!-- Bottom row -->
-  <div class="footer-bottom">
-    <span>© Atelier XIV LLC</span>
-    <a href="https://instagram.com/yourpage" target="_blank">
-      <img src="instagram.png" alt="Instagram" class="instagram-icon" />
-    </a>
-  </div>
-</footer>
 </html>

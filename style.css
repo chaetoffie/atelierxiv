@@ -74,9 +74,10 @@ canvas {
   background: rgba(0, 0, 0, 0.85);
   padding: 15px;
   border-radius: 8px;
-  width: 400px;
+  width: 200px;
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
   flex-direction: column;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .login-dialog.show {
@@ -112,9 +113,13 @@ canvas {
   box-shadow: 0 0 15px rgba(0,0,0,0.2);    
   opacity: 0.5;                
   mix-blend-mode: screen;   
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(.4,2,.6,1), left 0.3s cubic-bezier(.4,2,.6,1);
   z-index: 1000;              
   animation: float 3s ease-in-out infinite; 
+}
+
+.corner-image.moved {
+  left: 60px; /* Move image to the right when nav is open */
 }
 
 /* Hover effect: slightly more visible */
@@ -186,4 +191,55 @@ canvas {
 
 .instagram-icon:hover {
   opacity: 1;
+}
+#cursor-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1001; /* Make sure it's above the starfield */
+}
+
+/* Popup navigation */
+.popup-nav {
+  display: none;
+  position: fixed;
+  left: 20px; /* Same as logo's left */
+  /* top set by JS */
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  min-width: 0;
+  z-index: 2001;
+  text-align: left;
+}
+
+.popup-nav nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.popup-nav a {
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  text-decoration: none;
+  padding: 2px 0;
+  background: none;
+  border: none;
+  transition: color 0.2s;
+}
+
+.popup-nav a:hover {
+  color: #ffb700;
+  text-decoration: underline;
+}
+
+.close-nav {
+  display: none; /* Hide the close button, not needed for this style */
 }

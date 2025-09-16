@@ -1,7 +1,7 @@
 import * as THREE from 'three';
+import { particlesCursor } from "https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js";
 
-let scene, camera, renderer, stars, mouseMesh;
-let mouse = { x: 0, y: 0 };
+let scene, camera, renderer, stars;
 
 init();
 animate();
@@ -11,11 +11,9 @@ function init() {
   scene = new THREE.Scene();
 
   // Camera
-  const screenWidth = window.innerWidth;
-  const screenHeight = window.innerHeight;
   camera = new THREE.PerspectiveCamera(
     75,
-    screenWidth / screenHeight,
+    window.innerWidth / window.innerHeight,
     0.1,
     1000
   );
@@ -24,8 +22,8 @@ function init() {
 
   // Renderer
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setSize(screenWidth, screenHeight);
-  document.body.appendChild(renderer.domElement);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.getElementById("starfield").appendChild(renderer.domElement);
 
   // ===== Starfield =====
   const particleCount = 9000;
@@ -46,48 +44,29 @@ function init() {
     sizeAttenuation: true,
     transparent: true,
     opacity: 0.9,
-    alphaTest: 0.01,
   });
 
   stars = new THREE.Points(geometry, material);
   scene.add(stars);
 
-  // ===== Mouse Follower Sphere =====
-  const mouseGeometry = new THREE.SphereGeometry(1, 16, 16);
-  const mouseMaterial = new THREE.MeshBasicMaterial({
-    color: 0x00aaff,
-    transparent: true,
-    opacity: 0.8,
+  // ===== Cursor particles (overlay canvas) =====
+  particlesCursor({
+    el: document.getElementById("cursor-canvas"),
+    gpgpuSize: 512,
+    colors: [0xffffff, 0xff0000],
+    coordScale: 0.5,
+    noiseIntensity: 0.005,
+    noiseTimeCoef: 0.0001,
+    pointSize: 2,
+    pointDecay: 0.002,
+    sleepRadiusX: 250,
+    sleepRadiusY: 250,
+    sleepTimeCoefX: 0.002,
+    sleepTimeCoefY: 0.002,
   });
-  mouseMesh = new THREE.Mesh(mouseGeometry, mouseMaterial);
-  scene.add(mouseMesh);
 
-  // Lights
-  const light = new THREE.PointLight(0xffffff);
-  light.position.set(20, 0, 20);
-  scene.add(light);
-  const lightAmb = new THREE.AmbientLight(0x777777);
-  scene.add(lightAmb);
-
-  // Mouse listener
-  document.addEventListener('mousemove', onMouseMove, false);
-
-  // Handle resize
+  // Resize handler
   window.addEventListener('resize', onResize, false);
-}
-
-function onMouseMove(event) {
-  event.preventDefault();
-
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-  const vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
-  vector.unproject(camera);
-  const dir = vector.sub(camera.position).normalize();
-  const distance = -camera.position.z / dir.z;
-  const pos = camera.position.clone().add(dir.multiplyScalar(distance));
-  mouseMesh.position.copy(pos);
 }
 
 function onResize() {
@@ -99,15 +78,8 @@ function onResize() {
 function animate() {
   requestAnimationFrame(animate);
 
-  // Rotate stars slowly
   stars.rotation.y += 0.0008;
   stars.rotation.x += 0.0003;
 
-  render();
-}
-
-function render() {
-  renderer.autoClear = true;
-  renderer.clear();
   renderer.render(scene, camera);
 }
