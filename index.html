@@ -5,17 +5,61 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Atelier 14</title>
 
-  <!-- Gothic font (Blackletter style) -->
+  <!-- Linked image -->
+  <a href="https://en.wikipedia.org/wiki/Atelier" target="_blank">
+    <img src="unnamed.png" alt="My Picture" class="corner-image">
+  </a>
+
+  <!-- Login dialog -->
+  <div class="login-wrapper">
+    <button id="loginBtn">Login</button>
+    <div id="loginDialog" class="login-dialog">
+      <h3>Login</h3>
+      <input type="text" placeholder="Username" />
+      <input type="password" placeholder="Password" />
+      <button id="submitLogin">Submit</button>
+    </div>
+  </div>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
 
-  <!-- Link to external CSS -->
+  <!-- Styles -->
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <!-- Gothic title overlay -->
   <div class="title">Atelier XIV</div>
 
-  <!-- Three.js starfield -->
+  <!-- Login script -->
+  <script>
+    const loginBtn = document.getElementById('loginBtn');
+    const loginDialog = document.getElementById('loginDialog');
+
+    loginBtn.addEventListener('click', () => {
+      loginDialog.classList.toggle('show');
+    });
+  </script>
+
+  <!-- Three.js entry point -->
   <script type="module" src="/main.js"></script>
 </body>
+<<footer class="site-footer">
+  <!-- Top row -->
+  <div class="footer-links">
+    <a href="#">Terms</a>
+    <a href="#">Privacy</a>
+    <a href="#">General</a>
+    <a href="#">Contact</a>
+    <a href="#">Country</a>
+  </div>
+
+  <!-- Bottom row -->
+  <div class="footer-bottom">
+    <span>© Atelier XIV LLC</span>
+    <a href="https://instagram.com/yourpage" target="_blank">
+      <img src="instagram.png" alt="Instagram" class="instagram-icon" />
+    </a>
+  </div>
+</footer>
 </html>

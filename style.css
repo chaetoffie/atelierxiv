@@ -23,7 +23,7 @@ canvas {
                0 0 20px rgba(255, 255, 255, 0.6),
                0 0 40px rgba(255, 255, 255, 0.4);
   z-index: 10;
-  animation: glow 3s ease-in-out infinite alternate;
+  animation: fadeIn 2s ease forwards, glow 3s ease-in-out infinite alternate;
 }
 
 /* Subtle glowing animation */
@@ -36,4 +36,154 @@ canvas {
     text-shadow: 0 0 15px rgba(255, 255, 255, 1),
                  0 0 30px rgba(255, 255, 255, 0.8);
   }
+}
+
+/* Login wrapper in top-right */
+.login-wrapper {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  z-index: 15; /* above everything */
+}
+
+/* Login button styling */
+#loginBtn {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid white;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-family: 'UnifrakturCook', cursive;
+  border-radius: 6px;
+  transition: 0.3s;
+  font-size: small;
+  backdrop-filter: blur(5px);
+  
+}
+
+#loginBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Login dialog styling */
+.login-dialog {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 15px;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  flex-direction: column;
+}
+
+.login-dialog.show {
+  display: flex;
+}
+
+.login-dialog input {
+  margin: 5px 0;
+  padding: 6px;
+  border: none;
+  border-radius: 4px;
+}
+
+.login-dialog button {
+  margin-top: 8px;
+  padding: 6px;
+  background: white;
+  color: black;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.corner-image {
+  position: fixed;               
+  top: 10%;                     
+  left: 20px;                    
+  transform: translateY(-50%);   
+  width: 150px;                  
+  height: 150px;                 
+  border-radius: 50%;           
+  border: 2px solid rgba(255,255,255,0.3); 
+  background: transparent;      
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);    
+  opacity: 0.5;                
+  mix-blend-mode: screen;   
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 1000;              
+  animation: float 3s ease-in-out infinite; 
+}
+
+/* Hover effect: slightly more visible */
+.corner-image:hover {
+  opacity: 0.8;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%   { transform: translateY(-50%) translateX(0px); }
+  50%  { transform: translateY(-50%) translateX(5px); }
+  100% { transform: translateY(-50%) translateX(0px); }
+}
+.site-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 10px 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; /* space between top row and bottom row */
+  top: 90%; 
+}
+
+/* Spread links across */
+.site-footer .footer-links {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.site-footer .footer-links a {
+  color: white;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.site-footer .footer-links a:hover {
+  opacity: 1;
+  text-decoration: underline;
+}
+
+/* Bottom row */
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: white;
+  font-size: 1.5rem;
+  opacity: 0.8;
+  top: 100%;
+}
+
+/* Instagram icon */
+.instagram-icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(1); /* makes icon white if it's black */
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.instagram-icon:hover {
+  opacity: 1;
 }
